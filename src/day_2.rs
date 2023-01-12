@@ -44,8 +44,53 @@ impl Box {
         smallest
     }
     
+    fn get_smallest_face(self) -> Side {
+        let a = Side::new(self.l, self.w);
+        let b = Side::new(self.w, self.h);
+        let c = Side::new(self.h, self.l);
+        let smallest: Side;
+        if a.get_area() < b.get_area() {
+            if a.get_area() < c.get_area() {
+                smallest = a;
+            } else {
+                smallest = c;
+            }
+        } else {
+            if b.get_area() < c.get_area() {
+                smallest = b;
+            } else {
+                smallest = c;
+            }
+        }
+        smallest
+    }
+    
     fn get_surface_area(self) -> i32 {
         (2 * self.l * self.w) + (2 * self.w * self.h) + (2 * self.h * self.l)
+    }
+}
+
+#[derive(Clone, Copy)]
+struct Side {
+    l: i32,
+    w: i32
+}
+
+impl Side {
+    
+    fn new(l: i32, w: i32) -> Side {
+        Side {
+            l,
+            w
+        }
+    }
+    
+    fn get_area(self) -> i32 {
+        self.l * self.w
+    }
+    
+    fn get_perimeter(self) -> i32 {
+        (2 * self.l) + (2 * self.w)
     }
 }
 
@@ -81,9 +126,9 @@ pub fn wrapping_paper() {
         total_area += current_box.get_surface_area() + current_box.get_smallest_side();
         
         // total_ribbon += current_box.get_smallest_side().get_area() + current_box.get_area();
-        
+        total_ribbon += current_box.get_smallest_face().get_perimeter() + current_box.get_volume();
     }
     
-    println!("Total paper needed: {} sq. ft.", total_area);
-    println!("Total ribbon needed: {}", total_ribbon);
+    println!("Total paper needed: {} sqft.", total_area);
+    println!("Total ribbon needed: {} sqft.", total_ribbon);
 }
