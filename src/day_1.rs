@@ -2,10 +2,10 @@ use std::fs::File;
 use std::io::prelude::*;
 
 pub fn floor_directions() {
-    let mut paren_file = match File::open("parens.txt") {
+    let mut paren_file = match File::open("./txt/day_1.txt") {
         Ok(file) => file,
         Err(_) => {
-            match File::create("day_1.txt") {
+            match File::create("./txt/day_1.txt") {
                 Ok(_) => panic!("Created file day_1.txt"),
                 Err(e) => panic!("File creation failed: {:?}", e)
             };
@@ -13,7 +13,7 @@ pub fn floor_directions() {
     };
     
     let mut file_buffer = String::new();
-        match paren_file.read_to_string(&mut file_buffer) {
+    match paren_file.read_to_string(&mut file_buffer) {
         Ok(_) => println!("File read successfully."),
         Err(e) => panic!("Error: {:?}", e)
     };

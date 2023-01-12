@@ -8,5 +8,6 @@ pub mod day_3;
 
 fn main() {
     // day_1::floor_directions();
-    day_2::wrapping_paper();
+    // day_2::wrapping_paper();
+    day_3::directions();
 }

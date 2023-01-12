@@ -100,7 +100,7 @@ pub fn wrapping_paper() {
     let mut total_ribbon: i32 = 0;
     
     // Read from file here
-    let file = match File::open("day_2.txt") {
+    let file = match File::open("./txt/day_2.txt") {
         Ok(file) => BufReader::new(file).lines(),
         Err(e) => panic!("Error: {:?}", e)
     };
