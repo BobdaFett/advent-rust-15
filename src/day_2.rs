@@ -1,9 +1,9 @@
 use std::fs::File;
 use std::io::{BufReader, BufRead};
 
+// All of the data needed for a box.
 #[derive(Clone, Copy)]
 struct Box {
-    // stores the information needed for a box.
     l: i32,
     w: i32,
     h: i32
@@ -23,18 +23,22 @@ impl Box {
     }
     
     fn get_smallest_side(self) -> i32 {
+        let a = self.l * self.w;
+        let b = self.w * self.h;
+        let c = self.h * self.l;
         let smallest: i32;
-        if self.l < self.w {
-            if self.l < self.h {
-                smallest = self.l;
+        // l -> a, w -> b, h -> c
+        if a < b {
+            if a < c {
+                smallest = a;
             } else {
-                smallest = self.h;
+                smallest = c;
             }
         } else {
-            if self.w < self.h {
-                smallest = self.w;
+            if b < c {
+                smallest = b;
             } else {
-                smallest = self.h;
+                smallest = c;
             }
         }
         smallest
@@ -43,28 +47,6 @@ impl Box {
     fn get_surface_area(self) -> i32 {
         (2 * self.l * self.w) + (2 * self.w * self.h) + (2 * self.h * self.l)
     }
-    
-    // fn get_smallest_side(self) -> Side {
-    //     let smallest: Side;
-    //     if self.a.get_area() < self.b.get_area() {
-    //         if self.a.get_area() < self.c .get_area(){
-    //             smallest = self.a;
-    //         } else {
-    //             smallest = self.c;
-    //         }
-    //     } else {
-    //         if self.b.get_area() < self.c.get_area() {
-    //             smallest = self.b;
-    //         } else {
-    //             smallest = self.c;
-    //         }
-    //     }
-    //     smallest
-    // }
-    
-    // fn get_area(self) -> i32 {
-    //     self.a.get_area() * self.b.get_area() * self.c.get_area()
-    // }
 }
 
 pub fn wrapping_paper() {
@@ -96,7 +78,7 @@ pub fn wrapping_paper() {
         
         // total ribbon = perimeter of smallest face + total volume of box
         
-        total_area += current_box.get_surface_area(); // plus smallest size
+        total_area += current_box.get_surface_area() + current_box.get_smallest_side();
         
         // total_ribbon += current_box.get_smallest_side().get_area() + current_box.get_area();
         
