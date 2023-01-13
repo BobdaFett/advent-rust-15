@@ -1,49 +1,58 @@
 use std::fs::File;
 use std::io::Read;
+use std::collections::HashMap;
 
-enum MapError {
-    HouseDne
-}
-
-struct Coord {
-    x: i32,
-    y: i32
-}
-
-struct HouseMap {
-    origin: Coord, // placeholder
-    arr: Vec<Vec<i32>>
-}
-
-impl HouseMap {
-    fn new() -> HouseMap {
-        let temp_vec: Vec<Vec<i32>> = Vec::from(Vec::new());
-        HouseMap {
-            origin: Coord { x: 0, y: 0 },
-            arr: temp_vec
-        }
-    }
-    
-    fn push(self, x: i32, y: i32) -> Result<(), MapError> {
-        
-        Ok(())
-    }
-}
 
 pub fn directions() {
-    let mut file = if let Ok(file) = File::open("./txt/day_3.txt") {
+    let mut file: File = if let Ok(file) = File::open("./txt/day_3.txt") {
         file
     } else {
         panic!("Could not open file!");
     };
     
-    let mut file_buffer = String::new();
+    let mut file_buffer: String = String::new();
     match file.read_to_string(&mut file_buffer) {
         Ok(_) => println!("File read successfully."),
         Err(e) => panic!("Error: {:?}", e)
     }
     
-    // Do Vectors expand automatically?
+    let mut map: HashMap<(i32, i32), i32> = HashMap::new();
+    let mut current_pos: (i32, i32) = (0, 0);
+    let mut houses_with_extra: i32 = 0;
     
+    for c in file_buffer.chars() {
+        match c {
+            '>' => {
+                println!("Going east...");
+                current_pos.0 += 1;
+            },
+            '<' => {
+                println!("Going west...");
+                current_pos.0 -= 1;
+            },
+            '^' => {
+                println!("Going north...");
+                current_pos.1 += 1;
+            },
+            'v' => {
+                println!("Going south...");
+                current_pos.1 -= 1;
+            },
+            err => panic!("Error in input: {} is not a valid direction!", err)
+        }
+        
+        // Get entry from map
+        map.entry(current_pos).and_modify(|value| {
+            *value += 1;
+            println!("House @ ({}, {}) has {} presents.", current_pos.0, current_pos.1, value);
+            if *value > 1 {
+                if *value < 3 {
+                    println!("Adding one to var");
+                    houses_with_extra += 1;
+                }
+            }
+        }).or_insert(1);
+    }
     
+    println!("Number of houses with duplicate presents: {}", houses_with_extra);
 }
