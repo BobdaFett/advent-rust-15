@@ -10,8 +10,8 @@ pub fn directions() {
         panic!("Could not open file!");
     };
     
-    let mut file_buffer: String = String::new();
-    match file.read_to_string(&mut file_buffer) {
+    let mut directions: String = String::new();
+    match file.read_to_string(&mut directions) {
         Ok(_) => println!("File read successfully."),
         Err(e) => panic!("Error: {:?}", e)
     }
@@ -20,7 +20,7 @@ pub fn directions() {
     let mut current_pos: (i32, i32) = (0, 0);
     let mut houses_with_extra: i32 = 0;
     
-    for c in file_buffer.chars() {
+    for c in directions.chars() {
         match c {
             '>' => {
                 println!("Going east...");
@@ -46,10 +46,8 @@ pub fn directions() {
             *value += 1;
             println!("House @ ({}, {}) has {} presents.", current_pos.0, current_pos.1, value);
             if *value > 1 {
-                if *value < 3 {
-                    println!("Adding one to var");
-                    houses_with_extra += 1;
-                }
+                println!("Adding one to var");
+                houses_with_extra += 1;
             }
         }).or_insert(1);
     }
