@@ -11,12 +11,7 @@ pub fn directions() {
     };
     
     let mut directions: String = String::new();
-    match file.read_to_string(&mut directions) {
-        Ok(_) => println!("File read successfully."),
-        Err(e) => panic!("Error: {:?}", e)
-    }
-    
-    println!("{}", directions.len());
+    file.read_to_string(&mut directions).unwrap();
     
     let mut map: HashMap<(i32, i32), i32> = HashMap::new();
     let mut current_pos: (i32, i32) = (0, 0);
