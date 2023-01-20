@@ -1,6 +1,10 @@
 use std::fs::File;
 use std::io::{Read, Seek, SeekFrom};
 
+
+// I think this is quite possibly the slowest imaginable way of doing this, with the MD5 hash taking its time 
+// and having to iterate through every number available. I would highly recommend *never* using this function
+// unless there's absolutely no other choice and/or you have a lot of time on your hands.
 pub fn advent_coins() {
     let mut file = File::open("./txt/day_4.txt").unwrap();
     
