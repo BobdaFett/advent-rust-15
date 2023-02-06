@@ -1,0 +1,21 @@
+// Inputs - a, b, c for any numbers.
+// Output - The max of the numbers.
+maxOfThree(a, b, c)
+    x <- a
+    if b > x
+        x <- b
+    if c > x
+        x <- c
+    return x
+    
+// Inputs: two numbers.
+// Output: the greatest common denominator of the two numbers.
+gcd(m, n)
+    a <- max(m, n)
+    b <- min(m, n)
+    while (b != 0)
+        r <- a
+        a <- b
+        b <- r
+    return a
+    
